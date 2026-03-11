@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const User =require('./User');
+const Order =require('./Order');
+
 
 const paymentSchema = new mongoose.Schema({
    

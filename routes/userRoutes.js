@@ -6,6 +6,7 @@ const { Register, Login, ValidateVendeur } = require('../controllers/userControl
 router.post('/register', Register);
 router.post('/login', Login);
 
-router.put('/valider-vendeur/:id', ValidateVendeur);
+const { protect, adminOnly } = require('../middleware/authMiddleware');
 
+router.put('/valider-vendeur/:id', protect, adminOnly, ValidateVendeur);
 module.exports = router;

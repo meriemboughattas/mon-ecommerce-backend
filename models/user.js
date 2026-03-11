@@ -1,24 +1,27 @@
 const mongoose = require('mongoose');
-const userSchema = nex mongoose.schema({
-    nom :{type:string ,required:true},
-    email:{type : string ,required :true , unique:true},
-    motdepasse:{type:string ,  required : true},
 
-    role:{
-        type:string,
-        enum: ['client','vendeur','admin'],
-        default:'client' 
+const UserSchema = new mongoose.Schema({
+    nom: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    motdepasse: { type: String, required: true },
+
+    role: {
+        type: String,
+        enum: ['client', 'vendeur', 'admin'],
+        default: 'client' 
     },
-    adresse: {type:string},
-    telephone:{type :string},
-    infosvendeur :{
-        nomboutique:{type:string},
-        matriculefiscal:{type:string},
-        statutvalidation :{
-            type : string,
-            enum['en_attente','valide','refuse'],
-            default:'en_attente'
+    adresse: { type: String },
+    telephone: { type: String },
+    
+    infosvendeur: {
+        nomboutique: { type: String },
+        matriculefiscal: { type: String },
+        statutvalidation: {
+            type: String,
+            enum: ['en_attente', 'valide', 'refuse']
+            
         }
     }
-},{ tumestamps:true});
-module.exports =mongoose.model('user',userschema);
+}, { timestamps: true });
+
+module.exports = mongoose.model('User', UserSchema);
