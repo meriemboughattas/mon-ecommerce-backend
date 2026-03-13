@@ -6,17 +6,17 @@ const Register = async (req, res) => {
     try {
         const { nom, email, motdepasse, role, infosvendeur, telephone, adresse } = req.body;
 
-        // 1. Vérifier si l'utilisateur existe déjà
+        
         const userExists = await User.findOne({ email });
         if (userExists) {
             return res.status(400).send({ msg: 'Cet email est déjà utilisé' });
         }
 
-        // 2. Hasher le mot de passe
+        
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(motdepasse, salt);
 
-        // 3. Préparer les données de l'utilisateur
+        
         let userData = {
             nom,
             email,
@@ -26,7 +26,7 @@ const Register = async (req, res) => {
             adresse
         };
 
-        // 4. Si c'est un vendeur, on ajoute ses infos spécifiques
+        
         if (role === 'vendeur') {
             userData.infosvendeur = {
                 ...infosvendeur, 
@@ -34,11 +34,11 @@ const Register = async (req, res) => {
             };
         }
        
-        // 5. Créer et sauvegarder l'utilisateur
+       
         const newUser = new User(userData);
         await newUser.save();
         
-        // 6. Formater la réponse (ne jamais renvoyer le mot de passe)
+        
         const userSansMdp = newUser.toObject();
         delete userSansMdp.motdepasse;
        
@@ -54,7 +54,7 @@ const Login = async (req, res) => {
     try {
         const { email, motdepasse } = req.body;
 
-        // 1. Chercher l'utilisateur par son email (Correction : j'ai retiré le 'e' qui traînait)
+        
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).send({ msg: 'Utilisateur non trouvé' });
