@@ -1,31 +1,45 @@
 const mongoose = require('mongoose');
-const User =require('./User');
-const Order =require('./Order');
 
-
-const paymentSchema = new mongoose.Schema({
-   
-    commande: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Order', 
-        required: true 
+const productSchema = new mongoose.Schema(
+{
+    nom: {
+        type: String,
+        required: true
     },
 
+    description: {
+        type: String,
+        required: true
+    },
 
-    client: {
+    prix: {
+        type: Number,
+        required: true
+    },
+
+    stock: {
+        type: Number,
+        default: 0
+    },
+
+    image: {
+        type: String
+    },
+
+    categorie: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Category',
+        required: true
     },
 
-    montant: { type: Number, required: true },
-    methode: { type: String, required: true }, 
-    datePaiement: { type: Date, default: Date.now },
-    
-    statut: { 
-        type: String, 
-        enum: ['succes', 'echec', 'en_attente'],
-        default: 'en_attente'
+    vendeur: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     }
-}, { timestamps: true });
 
-module.exports = mongoose.model('Payment', paymentSchema);
+},
+{ timestamps: true }
+);
+
+module.exports = mongoose.model('Product', productSchema);
