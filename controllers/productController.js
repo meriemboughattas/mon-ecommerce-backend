@@ -2,15 +2,12 @@ const Product = require('../models/Product');
 
 const AddProduct = async (req, res) => {
     try {
-        
         console.log("Données du formulaire (req.body) :", req.body);
         console.log("Fichier image (req.file) :", req.file);
 
         let imagePath = "";
 
-        
         if (req.file) {
-            
             imagePath = req.file.path;
         } else {
             return res.status(400).send({ msg: "Veuillez sélectionner une image !" });
@@ -19,7 +16,6 @@ const AddProduct = async (req, res) => {
         const newProduct = new Product({
             ...req.body, 
             image: imagePath, 
-            
             vendeur: req.user ? req.user._id : req.body.vendeur
         });
 
@@ -64,7 +60,6 @@ const UpdateProduct = async (req, res) => {
     try {
         let dataToUpdate = { ...req.body };
 
-       
         if (req.file) {
             dataToUpdate.image = req.file.path; 
         }

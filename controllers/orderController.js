@@ -2,7 +2,6 @@ const Order = require('../models/Order');
 
 const CreateOrder = async (req, res) => {
     try {
-        
         const newOrder = new Order(req.body);
         await newOrder.save();
         res.status(200).send({ msg: 'Commande passée avec succès', order: newOrder });
@@ -11,10 +10,8 @@ const CreateOrder = async (req, res) => {
     }
 };
 
-
 const GetMyOrders = async (req, res) => {
     try {
-        
         const userId = req.params.userId;
         const orders = await Order.find({ client: userId }).populate('lignesCommande.produit');
         res.status(200).send({ msg: 'Vos commandes', orders });
@@ -22,7 +19,6 @@ const GetMyOrders = async (req, res) => {
         res.status(500).send({ msg: 'Erreur récupération', error });
     }
 };
-
 
 const UpdateOrderStatus = async (req, res) => {
     try {

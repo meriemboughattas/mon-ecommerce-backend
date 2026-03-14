@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     nom: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     motdepasse: { type: String, required: true },
 
     role: {
         type: String,
-        enum: ['client', 'vendeur', 'admin'],
+        enum:['client', 'vendeur', 'admin'],
         default: 'client' 
     },
     adresse: { type: String },
@@ -18,9 +18,9 @@ const userSchema = new mongoose.Schema({
         matriculefiscal: { type: String },
         statutvalidation: {
             type: String,
-            enum: ['en_attente', 'valide', 'refuse']
+            enum:['en_attente', 'valide', 'refuse']
         }
     }
 }, { timestamps: true });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', UserSchema);

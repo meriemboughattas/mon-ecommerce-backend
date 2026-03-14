@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const orderSchema = new mongoose.Schema({
     client: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User', // Majuscule
+        ref: 'User', 
         required: true 
     },
     lignesCommande:[
@@ -12,7 +12,7 @@ const orderSchema = new mongoose.Schema({
             prixUnitaire: { type: Number, required: true }, 
             produit: { 
                 type: mongoose.Schema.Types.ObjectId, 
-                ref: 'Product', // Majuscule
+                ref: 'Product', 
                 required: true 
             }
         }

@@ -10,7 +10,6 @@ const AddCategory = async (req, res) => {
     }
 };
 
-
 const GetAllCategories = async (req, res) => {
     try {
         const categories = await Category.find();

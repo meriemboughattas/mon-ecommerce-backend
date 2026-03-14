@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const paymentSchema = new mongoose.Schema({
     commande: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Order', // Majuscule
+        ref: 'Order', 
         required: true 
     },
     client: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'   // Majuscule
+        ref: 'User' 
     },
     montant: { type: Number, required: true },
     methode: { type: String, required: true }, 

@@ -9,12 +9,12 @@ const productSchema = new mongoose.Schema({
 
     categorie: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category', // Majuscule de retour
+        ref: 'Category', 
         required: true
     },
     vendeur: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',     // Majuscule de retour
+        ref: 'User', 
         required: true
     }
 }, { timestamps: true });
