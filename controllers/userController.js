@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -60,22 +60,22 @@ const Login = async (req, res) => {
             return res.status(400).send({ msg: 'Utilisateur non trouvé' });
         }
 
-        
+        // 2. Comparer les mots de passe (Correction : j'ai retiré le 'e' qui traînait)
         const isMatch = await bcrypt.compare(motdepasse, user.motdepasse);
         if (!isMatch) {
             return res.status(400).send({ msg: 'Mot de passe incorrect' });
         }
 
-        
+        // 3. Créer le contenu du Token (Payload)
         const payload = {
             id: user._id,
             role: user.role
         };
 
-        
+        // 4. Générer le Token JWT
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
 
-        
+        // 5. Formater la réponse (Correction : j'ai retiré le 'e' qui traînait)
         const userSansMdp = user.toObject();
         delete userSansMdp.motdepasse;
 
@@ -89,9 +89,9 @@ const Login = async (req, res) => {
 const ValidateVendeur = async (req, res) => {
     try {
         const id = req.params.id;
-        const { statut } = req.body; 
+        const { statut } = req.body; // 'valide' ou 'refuse'
 
-        
+        // Mise à jour du statut du vendeur
         const updatedUser = await User.findByIdAndUpdate(
             id,
             { "infosvendeur.statutvalidation": statut }, 
