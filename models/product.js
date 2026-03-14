@@ -9,14 +9,14 @@ const productSchema = new mongoose.Schema({
 
     categorie: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'category', // Minuscule ici
+        ref: 'Category', // Majuscule de retour
         required: true
     },
     vendeur: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',     // Minuscule ici
+        ref: 'User',     // Majuscule de retour
         required: true
     }
 }, { timestamps: true });
 
-module.exports = mongoose.model('product', productSchema);
+module.exports = mongoose.model('Product', productSchema);
