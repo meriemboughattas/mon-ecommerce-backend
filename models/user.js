@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     nom: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     motdepasse: { type: String, required: true },
@@ -19,9 +19,8 @@ const UserSchema = new mongoose.Schema({
         statutvalidation: {
             type: String,
             enum: ['en_attente', 'valide', 'refuse']
-            
         }
     }
 }, { timestamps: true });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('user', userSchema);
