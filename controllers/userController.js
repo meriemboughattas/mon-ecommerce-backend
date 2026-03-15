@@ -17,7 +17,7 @@ const Register = async (req, res) => {
         let userData = {
             nom,
             email,
-            motdepasse: hashedPassword, 
+            motdepasse: hashedPassword,
             role,
             telephone,
             adresse
@@ -25,17 +25,17 @@ const Register = async (req, res) => {
 
         if (role === 'vendeur') {
             userData.infosvendeur = {
-                ...infosvendeur, 
-                statutvalidation: 'en_attente' 
+                ...infosvendeur,
+                statutvalidation: 'en_attente'
             };
         }
-       
+
         const newUser = new User(userData);
         await newUser.save();
-        
+
         const userSansMdp = newUser.toObject();
         delete userSansMdp.motdepasse;
-       
+
         res.status(201).send({ msg: 'Inscription réussie', user: userSansMdp });
 
     } catch (error) {
@@ -78,11 +78,10 @@ const Login = async (req, res) => {
 const ValidateVendeur = async (req, res) => {
     try {
         const id = req.params.id;
-        const { statut } = req.body; 
 
         const updatedUser = await User.findByIdAndUpdate(
             id,
-            { "infosvendeur.statutvalidation": statut }, 
+            { "infosvendeur.statutvalidation": "valide" },
             { new: true }
         );
 
@@ -90,11 +89,21 @@ const ValidateVendeur = async (req, res) => {
             return res.status(404).send({ msg: 'Utilisateur non trouvé' });
         }
 
-        res.status(200).send({ msg: `Vendeur passé en statut : ${statut}`, user: updatedUser });
+        res.status(200).send({ msg: 'Vendeur validé avec succès', user: updatedUser });
 
     } catch (error) {
         res.status(500).send({ msg: 'Erreur validation', error });
     }
 };
 
-module.exports = { Register, Login, ValidateVendeur };
+// ✅ NOUVEAU : Récupérer tous les vendeurs
+const GetVendeurs = async (req, res) => {
+    try {
+        const vendeurs = await User.find({ role: 'vendeur' }).select('-motdepasse');
+        res.status(200).json(vendeurs);
+    } catch (error) {
+        res.status(500).send({ msg: 'Erreur récupération vendeurs', error });
+    }
+};
+
+module.exports = { Register, Login, ValidateVendeur, GetVendeurs };
