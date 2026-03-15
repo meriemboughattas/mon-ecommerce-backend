@@ -8,10 +8,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js", 
+    "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "dependencies": {
+    "@vscode/vsce": "^3.7.1",
     "bcryptjs": "^3.0.3",
     "cloudinary": "^1.41.3",
     "cors": "^2.8.6",
