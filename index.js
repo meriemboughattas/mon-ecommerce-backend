@@ -5,13 +5,21 @@ const PORT = process.env.PORT || 5000;
 const connectdb = require("./config/connectdb");
 const cors = require("cors");
 
-
 connectdb();
 
-
 app.use(express.json());
-app.use(cors());
 
+// ✅ CORS corrigé
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://projet-frontend-complet.vercel.app'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
 
 const authRoutes = require("./routes/authRoutes"); 
 const userRoutes = require("./routes/userRoutes");
@@ -20,14 +28,12 @@ const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 
-
 app.use("/api/auth", authRoutes);       
 app.use("/api/user", userRoutes);       
 app.use("/api/categorie", categoryRoutes);
 app.use("/api/product", productRoutes);
 app.use("/api/order", orderRoutes);
 app.use("/api/payment", paymentRoutes);
-
 
 app.listen(PORT, (err) => {
     if (err) throw err;
